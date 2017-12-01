@@ -147,7 +147,7 @@
         })
       },
       o: {
-        color: "olivegreen",
+        color: "orange",
         sound: new Howl({
           src: ['assets/sounds/suspension.mp3']
         })
@@ -187,9 +187,13 @@
 
     function onFrame(event) {
       for (var i = 0; i < circleArray.length; i++) {
-        console.log(circleArray[i])
         circleArray[i].fillColor.hue += 1;
         circleArray[i].scale(.9);
+        if(circleArray[i].area <1) {
+          circleArray[i].remove();
+          circleArray.splice(i,1);
+          i--;
+        }
       }
     }
 
