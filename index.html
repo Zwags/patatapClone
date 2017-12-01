@@ -5,24 +5,200 @@
     <title>Here's a clone of Patatap!</title>
     <link rel="stylesheet" href="assets/css/patatapClone.css">
     <script type="text/javascript" src="assets/js/lib/paper-full.js">    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.0.5/howler.core.min.js">  </script>
     <script type="text/paperscript" canvas="myCanvas">
-	// Create a Paper.js Path to draw a line into it:
-	var path = new Path();
-	// Give the stroke a color
-	path.strokeColor = 'orange';
-	var start = new Point(100, 100);
-	// Move to start and draw a line from there
-	path.moveTo(start);
-	// Note the plus operator on Point objects.
-	// PaperScript does that for us, and much more!
-	path.lineTo(start + [ 100, -50 ]);
+    var keyData = {
+      a: {
+        color: "purple",
+        sound: new Howl({
+          src: ['assets/sounds/bubbles.mp3']
+        })
+      },
+      s: {
+        color: "red",
+        sound: new Howl({
+          src: ['assets/sounds/clay.mp3']
+        })
+      },
+      d: {
+        color: "blue",
+        sound: new Howl({
+          src: ['assets/sounds/moon.mp3']
+        })
+      },
+      w: {
+        color: "orange",
+        sound: new Howl({
+          src: ['assets/sounds/squiggle.mp3']
+        })
+      },
+      q: {
+        color: "pink",
+        sound: new Howl({
+          src: ['assets/sounds/glimmer.mp3']
+        })
+      },
+      e: {
+        color: "grey",
+        sound: new Howl({
+          src: ['assets/sounds/splits.mp3']
+        })
+      },
+      z: {
+        color: "green",
+        sound: new Howl({
+          src: ['assets/sounds/zig-zag.mp3']
+        })
+      },
+      x: {
+        color: "yellow",
+        sound: new Howl({
+          src: ['assets/sounds/wipe.mp3']
+        })
+      },
+      c: {
+        color: "purple",
+        sound: new Howl({
+          src: ['assets/sounds/corona.mp3']
+        })
+      },
+      r: {
+        color: "aqua",
+        sound: new Howl({
+          src: ['assets/sounds/prism-2.mp3']
+        })
+      },
+      f: {
+        color: "brown",
+        sound: new Howl({
+          src: ['assets/sounds/flash-1.mp3']
+        })
+      },
+      v: {
+        color: "violet",
+        sound: new Howl({
+          src: ['assets/sounds/ufo.mp3']
+        })
+      },
+      t: {
+        color: "tan",
+        sound: new Howl({
+          src: ['assets/sounds/timer.mp3']
+        })
+      },
+      g: {
+        color: "gold",
+        sound: new Howl({
+          src: ['assets/sounds/strike.mp3']
+        })
+      },
+      b: {
+        color: "bisque",
+        sound: new Howl({
+          src: ['assets/sounds/confetti.mp3']
+        })
+      },
+      y: {
+        color: "yellow",
+        sound: new Howl({
+          src: ['assets/sounds/veil.mp3']
+        })
+      },
+      h: {
+        color: "honeydew",
+        sound: new Howl({
+          src: ['assets/sounds/prism-3.mp3']
+        })
+      },
+      n: {
+        color: "olive",
+        sound: new Howl({
+          src: ['assets/sounds/dotted-spiral.mp3']
+        })
+      },
+      u: {
+        color: "thistle",
+        sound: new Howl({
+          src: ['assets/sounds/piston-2.mp3']
+        })
+      },
+      j: {
+        color: "ivory",
+        sound: new Howl({
+          src: ['assets/sounds/pinwheel.mp3']
+        })
+      },
+      m: {
+        color: "maroon",
+        sound: new Howl({
+          src: ['assets/sounds/splits.mp3']
+        })
+      },
+      i: {
+        color: "indigo",
+        sound: new Howl({
+          src: ['assets/sounds/clay.mp3']
+        })
+      },
+      k: {
+        color: "khaki",
+        sound: new Howl({
+          src: ['assets/sounds/piston-1.mp3']
+        })
+      },
+      o: {
+        color: "olivegreen",
+        sound: new Howl({
+          src: ['assets/sounds/suspension.mp3']
+        })
+      },
+      l: {
+        color: "limegreen",
+        sound: new Howl({
+          src: ['assets/sounds/prism-1.mp3']
+        })
+      },
+      p: {
+        color: "pink",
+        sound: new Howl({
+          src: ['assets/sounds/prism-2.mp3']
+        })
+      }
 
-  var myCircle = new Path.Circle(new Point(234, 70), 45);
-myCircle.fillColor = 'blue';
+    }
 
-var myCircle2 = new Path.Circle(new Point(35, 70), 13);
-myCircle.fillColor = 'red';
+    // Create a Paper.js Path to draw a line into it:
+    var circleArray = [];
+
+    function onKeyDown(event) {
+      if(keyData[event.key]) {
+        var maxPoint = new Point(view.size.width, view.size.height);
+        var randomPoint = Point.random();
+        //generates a point between that exists on the visable area of canvas
+        var point = maxPoint * randomPoint;
+        var newCircle = new Path.Circle(point, 500);
+        newCircle.fillColor = keyData[event.key].color;
+        keyData[event.key].sound.play();
+        circleArray.push(newCircle);
+      }
+
+
+    }
+
+    function onFrame(event) {
+      for (var i = 0; i < circleArray.length; i++) {
+        console.log(circleArray[i])
+        circleArray[i].fillColor.hue += 1;
+        circleArray[i].scale(.9);
+      }
+    }
+
+
 </script>
+
+
+
+
   </head>
   <body>
     <canvas id="myCanvas" resize></canvas>
