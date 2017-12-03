@@ -164,45 +164,41 @@
           src: ['assets/sounds/prism-2.mp3']
         })
       }
-
     }
 
     // Create a Paper.js Path to draw a line into it:
-    var circleArray = [];
+    //var circleArray = [];
+    var shapeArray = [];
 
     function onKeyDown(event) {
       if(keyData[event.key]) {
         var maxPoint = new Point(view.size.width, view.size.height);
         var randomPoint = Point.random();
+
+        var randSides = Math.floor(Math.random() * 10);
+        console.log(randSides)
         //generates a point between that exists on the visable area of canvas
         var point = maxPoint * randomPoint;
-        var newCircle = new Path.Circle(point, 500);
-        newCircle.fillColor = keyData[event.key].color;
+        //var newCircle = new Path.Circle(point, 500);
+        var newShape = new Path.RegularPolygon(point, randSides, 300);
+        newShape.fillColor = keyData[event.key].color;
         keyData[event.key].sound.play();
-        circleArray.push(newCircle);
+        shapeArray.push(newShape)
       }
-
-
     }
 
     function onFrame(event) {
-      for (var i = 0; i < circleArray.length; i++) {
-        circleArray[i].fillColor.hue += 1;
-        circleArray[i].scale(.9);
-        if(circleArray[i].area <1) {
-          circleArray[i].remove();
-          circleArray.splice(i,1);
+      for (var i = 0; i < shapeArray.length; i++) {
+        shapeArray[i].fillColor.hue += 1;
+        shapeArray[i].scale(.9);
+        if(shapeArray[i].area <1) {
+          shapeArray[i].remove();
+          shapeArray.splice(i,1);
           i--;
         }
       }
     }
-
-
 </script>
-
-
-
-
   </head>
   <body>
     <canvas id="myCanvas" resize></canvas>
